@@ -18,7 +18,7 @@ const app = express();
 app.use(cors({
   origin: [
     "http://localhost:3000",
-    "https://your-frontend-domain.vercel.app",
+    "https://escrow-api-topaz.vercel.app",
     process.env.FRONTEND_URL
   ].filter(Boolean),
   credentials: true
@@ -30,13 +30,15 @@ app.use(express.urlencoded({ extended: true }));
 // MongoDB connection
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    console.log("MongoDB Connected");
-  } catch (err) {
-    console.error("MongoDB connection error:", err.message);
+    if (process.env.MONGO_URI) {
+      await mongoose.connect(process.env.MONGO_URI);
+      console.log("MongoDB Connected");
+    } else {
+      console.warn("MONGO_URI not set, running without database");
+    }
+  } catch (error) {
+    console.error("MongoDB connection error:", error.message);
+    // Don't crash the app, continue without DB
   }
 };
 
