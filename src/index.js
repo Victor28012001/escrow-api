@@ -3,13 +3,6 @@
 // import dotenv from "dotenv";
 // import mongoose from "mongoose";
 
-// // Your other imports...
-// import authRoutes from "./routes/authRoutes.js";
-// import reviewRoutes from "./routes/reviewRoutes.js";
-// import historyRoutes from "./routes/historyRoutes.js";
-// import artisanRoutes from "./routes/artisans.js";
-// import escrowRoutes from "./routes/escrow.js";
-
 // dotenv.config();
 
 // const app = express();
@@ -38,7 +31,6 @@
 //     }
 //   } catch (error) {
 //     console.error("MongoDB connection error:", error.message);
-//     // Don't crash the app, continue without DB
 //   }
 // };
 
@@ -60,11 +52,38 @@
 //   });
 // });
 
+// // TEST: Add routes one by one to find which one crashes
+
+// // First, test without any routes
+// app.get("/api/test", (req, res) => {
+//   res.json({ message: "Basic route working" });
+// });
+
+// // Then uncomment one by one:
+// import authRoutes from "./routes/authRoutes.js";
 // app.use("/api/auth", authRoutes);
+
+// import artisanRoutes from "./routes/artisans.js";
 // app.use("/api/artisans", artisanRoutes);
-// app.use("/api/reviews", reviewRoutes);
-// app.use("/api/history", historyRoutes);
+
+// import escrowRoutes from "./routes/escrow.js";
 // app.use("/api/escrow", escrowRoutes);
+
+// import reviewRoutes from "./routes/reviewRoutes.js";
+// app.use("/api/reviews", reviewRoutes);
+
+// try {
+//   import("./routes/historyRoutes.js").then(module => {
+//     app.use("/api/history", module.default);
+//   });
+// } catch (error) {
+//   console.error("Failed to load history routes:", error);
+// }
+
+// // Test route for history
+// app.get("/api/history-test", (req, res) => {
+//   res.json({ message: "History route test - working" });
+// });
 
 // // Error handling
 // app.use((err, req, res, next) => {
@@ -80,21 +99,15 @@
 //   res.status(404).json({ error: "Route not found" });
 // });
 
-// const PORT = process.env.PORT || 4000;
-
-// // Export the app for Vercel
 // export default app;
-
-// // Only listen if not in Vercel environment
-// if (process.env.NODE_ENV !== 'production' || process.env.VERCEL !== '1') {
-//   app.listen(PORT, () => {
-//     console.log(`Server running on port ${PORT}`);
-//   });
-// }
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import mongoose from "mongoose";
+
+// Import routes
+import authRoutes from "./routes/authRoutes.js";
+import artisanRoutes from "./routes/artisans.js";
+import escrowRoutes from "./routes/escrow.js";
 
 dotenv.config();
 
@@ -113,26 +126,11 @@ app.use(cors({
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true }));
 
-// MongoDB connection
-const connectDB = async () => {
-  try {
-    if (process.env.MONGO_URI) {
-      await mongoose.connect(process.env.MONGO_URI);
-      console.log("MongoDB Connected");
-    } else {
-      console.warn("MONGO_URI not set, running without database");
-    }
-  } catch (error) {
-    console.error("MongoDB connection error:", error.message);
-  }
-};
-
-connectDB();
-
 // Routes
 app.get("/", (req, res) => {
   res.json({ 
     message: "Artisan Escrow API is running", 
+    database: "None - Using StarkNet Blockchain Only",
     timestamp: new Date().toISOString() 
   });
 });
@@ -140,43 +138,16 @@ app.get("/", (req, res) => {
 app.get("/api/health", (req, res) => {
   res.json({ 
     status: "OK", 
-    database: mongoose.connection.readyState === 1 ? "Connected" : "Disconnected",
+    database: "Blockchain Only",
+    starknet: process.env.CONTRACT_ADDRESS ? "Configured" : "Not configured",
     timestamp: new Date().toISOString()
   });
 });
 
-// TEST: Add routes one by one to find which one crashes
-
-// First, test without any routes
-app.get("/api/test", (req, res) => {
-  res.json({ message: "Basic route working" });
-});
-
-// Then uncomment one by one:
-import authRoutes from "./routes/authRoutes.js";
+// Use routes
 app.use("/api/auth", authRoutes);
-
-import artisanRoutes from "./routes/artisans.js";
 app.use("/api/artisans", artisanRoutes);
-
-import escrowRoutes from "./routes/escrow.js";
 app.use("/api/escrow", escrowRoutes);
-
-import reviewRoutes from "./routes/reviewRoutes.js";
-app.use("/api/reviews", reviewRoutes);
-
-try {
-  import("./routes/historyRoutes.js").then(module => {
-    app.use("/api/history", module.default);
-  });
-} catch (error) {
-  console.error("Failed to load history routes:", error);
-}
-
-// Test route for history
-app.get("/api/history-test", (req, res) => {
-  res.json({ message: "History route test - working" });
-});
 
 // Error handling
 app.use((err, req, res, next) => {
@@ -193,3 +164,11 @@ app.use((req, res) => {
 });
 
 export default app;
+
+// Only listen if not in Vercel environment
+if (process.env.NODE_ENV !== 'production' || process.env.VERCEL !== '1') {
+  const PORT = process.env.PORT || 4000;
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT} - Blockchain Only Mode`);
+  });
+}
