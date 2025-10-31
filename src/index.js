@@ -165,8 +165,18 @@ app.use("/api/escrow", escrowRoutes);
 import reviewRoutes from "./routes/reviewRoutes.js";
 app.use("/api/reviews", reviewRoutes);
 
-import historyRoutes from "./routes/historyRoutes.js";
-app.use("/api/history", historyRoutes);
+try {
+  import("./routes/historyRoutes.js").then(module => {
+    app.use("/api/history", module.default);
+  });
+} catch (error) {
+  console.error("Failed to load history routes:", error);
+}
+
+// Test route for history
+app.get("/api/history-test", (req, res) => {
+  res.json({ message: "History route test - working" });
+});
 
 // Error handling
 app.use((err, req, res, next) => {
