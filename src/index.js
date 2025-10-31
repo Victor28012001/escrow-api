@@ -165,8 +165,8 @@ app.use("/api/escrow", escrowRoutes);
 import reviewRoutes from "./routes/reviewRoutes.js";
 app.use("/api/reviews", reviewRoutes);
 
-// import historyRoutes from "./routes/historyRoutes.js";
-// app.use("/api/history", historyRoutes);
+import historyRoutes from "./routes/historyRoutes.js";
+app.use("/api/history", historyRoutes);
 
 // Error handling
 app.use((err, req, res, next) => {
