@@ -159,11 +159,11 @@ app.use("/api/auth", authRoutes);
 import artisanRoutes from "./routes/artisans.js";
 app.use("/api/artisans", artisanRoutes);
 
-// import escrowRoutes from "./routes/escrow.js";
-// app.use("/api/escrow", escrowRoutes);
+import escrowRoutes from "./routes/escrow.js";
+app.use("/api/escrow", escrowRoutes);
 
-// import reviewRoutes from "./routes/reviewRoutes.js";
-// app.use("/api/reviews", reviewRoutes);
+import reviewRoutes from "./routes/reviewRoutes.js";
+app.use("/api/reviews", reviewRoutes);
 
 // import historyRoutes from "./routes/historyRoutes.js";
 // app.use("/api/history", historyRoutes);
