@@ -162,21 +162,21 @@ app.use("/api/artisans", artisanRoutes);
 // import escrowRoutes from "./routes/escrow.js";
 // app.use("/api/escrow", escrowRoutes);
 
-// import reviewRoutes from "./routes/reviewRoutes.js";
-// app.use("/api/reviews", reviewRoutes);
+import reviewRoutes from "./routes/reviewRoutes.js";
+app.use("/api/reviews", reviewRoutes);
 
-// try {
-//   import("./routes/historyRoutes.js").then(module => {
-//     app.use("/api/history", module.default);
-//   });
-// } catch (error) {
-//   console.error("Failed to load history routes:", error);
-// }
+try {
+  import("./routes/historyRoutes.js").then(module => {
+    app.use("/api/history", module.default);
+  });
+} catch (error) {
+  console.error("Failed to load history routes:", error);
+}
 
 // Test route for history
-// app.get("/api/history-test", (req, res) => {
-//   res.json({ message: "History route test - working" });
-// });
+app.get("/api/history-test", (req, res) => {
+  res.json({ message: "History route test - working" });
+});
 
 // Error handling
 app.use((err, req, res, next) => {
