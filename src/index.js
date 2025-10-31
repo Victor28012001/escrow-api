@@ -153,8 +153,8 @@ app.get("/api/test", (req, res) => {
 });
 
 // Then uncomment one by one:
-// import authRoutes from "./routes/authRoutes.js";
-// app.use("/api/auth", authRoutes);
+import authRoutes from "./routes/authRoutes.js";
+app.use("/api/auth", authRoutes);
 
 // import artisanRoutes from "./routes/artisans.js";
 // app.use("/api/artisans", artisanRoutes);
