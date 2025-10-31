@@ -4,11 +4,9 @@ import {
   createBooking,
   releasePayment,
   refundCustomer,
-  addBalance,
   getBalance,
   getArtisanDetails,
   getEscrowStatus,
-  getEscrowBalance,
   createAccount
 } from "../utils/starknetClient.js";
 
