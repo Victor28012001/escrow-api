@@ -1,0 +1,110 @@
+[
+  {
+    "type": "impl",
+    "name": "ArtisanEscrowImpl",
+    "interface_name": "artisan_escrow::IArtisanEscrow"
+  },
+  {
+    "type": "interface",
+    "name": "artisan_escrow::IArtisanEscrow",
+    "items": [
+      {
+        "type": "function",
+        "name": "register_artisan",
+        "inputs": [
+          {"name": "name", "type": "felt252"},
+          {"name": "service", "type": "felt252"},
+          {"name": "location", "type": "felt252"}
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "type": "function",
+        "name": "create_booking",
+        "inputs": [
+          {"name": "artisan", "type": "core::starknet::contract_address::ContractAddress"},
+          {"name": "amount", "type": "core::integer::u128"}
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "type": "function",
+        "name": "release_payment",
+        "inputs": [
+          {"name": "artisan", "type": "core::starknet::contract_address::ContractAddress"},
+          {"name": "customer", "type": "core::starknet::contract_address::ContractAddress"}
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "type": "function",
+        "name": "refund_customer",
+        "inputs": [
+          {"name": "artisan", "type": "core::starknet::contract_address::ContractAddress"},
+          {"name": "customer", "type": "core::starknet::contract_address::ContractAddress"}
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "type": "function",
+        "name": "add_balance",
+        "inputs": [
+          {"name": "user", "type": "core::starknet::contract_address::ContractAddress"},
+          {"name": "amount", "type": "core::integer::u128"}
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "type": "function",
+        "name": "get_balance",
+        "inputs": [
+          {"name": "user", "type": "core::starknet::contract_address::ContractAddress"}
+        ],
+        "outputs": [
+          {"type": "core::integer::u128"}
+        ],
+        "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "get_artisan_details",
+        "inputs": [
+          {"name": "artisan", "type": "core::starknet::contract_address::ContractAddress"}
+        ],
+        "outputs": [
+          {"type": "(core::felt252, core::felt252, core::felt252)"}
+        ],
+        "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "get_escrow_status",
+        "inputs": [
+          {"name": "artisan", "type": "core::starknet::contract_address::ContractAddress"},
+          {"name": "customer", "type": "core::starknet::contract_address::ContractAddress"}
+        ],
+        "outputs": [
+          {"type": "core::felt252"}
+        ],
+        "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "get_escrow_balance",
+        "inputs": [
+          {"name": "artisan", "type": "core::starknet::contract_address::ContractAddress"},
+          {"name": "customer", "type": "core::starknet::contract_address::ContractAddress"}
+        ],
+        "outputs": [
+          {"type": "core::integer::u128"}
+        ],
+        "state_mutability": "view"
+      }
+    ]
+  }
+]
