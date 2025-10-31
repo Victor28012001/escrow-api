@@ -156,8 +156,8 @@ app.get("/api/test", (req, res) => {
 import authRoutes from "./routes/authRoutes.js";
 app.use("/api/auth", authRoutes);
 
-// import artisanRoutes from "./routes/artisans.js";
-// app.use("/api/artisans", artisanRoutes);
+import artisanRoutes from "./routes/artisans.js";
+app.use("/api/artisans", artisanRoutes);
 
 // import escrowRoutes from "./routes/escrow.js";
 // app.use("/api/escrow", escrowRoutes);
