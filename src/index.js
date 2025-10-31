@@ -174,9 +174,9 @@ app.use("/api/reviews", reviewRoutes);
 // }
 
 // Test route for history
-app.get("/api/history-test", (req, res) => {
-  res.json({ message: "History route test - working" });
-});
+// app.get("/api/history-test", (req, res) => {
+//   res.json({ message: "History route test - working" });
+// });
 
 // Error handling
 app.use((err, req, res, next) => {
