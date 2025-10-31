@@ -162,8 +162,8 @@ app.use("/api/artisans", artisanRoutes);
 import escrowRoutes from "./routes/escrow.js";
 app.use("/api/escrow", escrowRoutes);
 
-import reviewRoutes from "./routes/reviewRoutes.js";
-app.use("/api/reviews", reviewRoutes);
+// import reviewRoutes from "./routes/reviewRoutes.js";
+// app.use("/api/reviews", reviewRoutes);
 
 // try {
 //   import("./routes/historyRoutes.js").then(module => {
